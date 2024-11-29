@@ -23,3 +23,4 @@ rootProject.name = "RVPRC"
 include(":app")
 include(":core:api")
 include(":core:repository")
+include(":core:datasource")
