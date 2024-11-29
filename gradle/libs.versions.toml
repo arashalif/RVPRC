@@ -1,6 +1,8 @@
 [versions]
-compileSdk = "34"
+coilCompose = "3.0.4"
+compileSdk = "35"
 gson = "2.10.1"
+media3Common = "1.5.0"
 minSdk = "21"
 targetSdk = "34"
 agp = "8.5.2"
@@ -22,12 +24,15 @@ material = "1.12.0"
 activityKtx = "1.9.3"
 retrofit = "2.9.0"
 okhttp = "4.12.0"
-exoplayer = "2.8.7"
+exoplayer = "1.5.0"
 lifecycleViewmodelCompose = "2.8.7"
 
 [libraries]
 
 androidx-lifecycle-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-media3-common = { module = "androidx.media3:media3-common", version.ref = "exoplayer" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
+coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilCompose" }
 coroutine-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutine" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
@@ -39,6 +44,7 @@ androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", ve
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 media3-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "exoplayer" }
 media3-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "exoplayer" }
+
 androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
 
 # Test dependeies

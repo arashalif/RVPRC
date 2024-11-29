@@ -24,11 +24,10 @@ internal object ApiModule {
     @Singleton
     fun provideApiService(
         okHttpClient: OkHttpClient,
-        gson: Gson,
     ): ApiService {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(GsonConverterFactory.create(Gson()))
             .client(okHttpClient)
             .build()
             .create(ApiService::class.java)

@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.kapt)
@@ -7,20 +7,14 @@ plugins {
 }
 
 android {
-    namespace = "com.arashaghelifar.rvprc"
+    namespace = "com.arashaghelifar.edit"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.arashaghelifar.rvprc"
         minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.compileSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -39,37 +33,34 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
 }
 
 dependencies {
 
-    implementation(project(":core:api"))
-    implementation(project(":core:datasource"))
-    implementation(project(":core:ui"))
     implementation(project(":core:repository"))
-    implementation(project(":feature:content"))
+    implementation(project(":core:ui"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.navigation.compose)
+
+    implementation(libs.androidx.lifecycle.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.material3)
+
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+
+    implementation (libs.media3.exoplayer)
+    implementation (libs.media3.ui)
+    implementation (libs.androidx.media3.common)
+
+
+    implementation(libs.coroutine.android)
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
     testImplementation(libs.junit)
