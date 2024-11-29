@@ -2,6 +2,8 @@ package com.arashaghelifar.repository.model
 
 import com.arashaghelifar.datasource.model.Platforms
 import com.arashaghelifar.datasource.model.VideoResponse
+import com.arashaghelifar.repository.utils.extractDate
+import com.arashaghelifar.repository.utils.extractTime
 
 data class ContentState(
     val title: String,
@@ -9,7 +11,8 @@ data class ContentState(
     val thumbnailUrl: String,
     val videoUrl: String,
     val platforms: List<PlatformsEnum>,
-    val time: String
+    val time: String,
+    val date: String
 )
 
 fun VideoResponse.mapToContentState() = ContentState(
@@ -18,7 +21,8 @@ fun VideoResponse.mapToContentState() = ContentState(
     thumbnailUrl = video.thumbnail,
     videoUrl = video.videoUrl,
     platforms = extractPlatform(video.platforms),
-    time = video.publishAt
+    time = video.publishAt.extractTime(),
+    date = video.publishAt.extractDate(),
 )
 
 private fun extractPlatform(platform: Platforms): List<PlatformsEnum> {
