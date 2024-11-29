@@ -15,11 +15,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -39,25 +37,60 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
+import androidx.navigation.NavController
 import coil3.compose.AsyncImage
-import coil3.compose.rememberAsyncImagePainter
 import com.arashaghelifar.repository.model.ResultState
+import com.arashaghelifar.ui.components.AlertDialog
+import com.arashaghelifar.ui.components.BottomSheet
 import com.arashaghelifar.ui.components.RVTopBar
+import com.arashaghelifar.ui.route.Screen
 import com.arashaghelifar.ui.theme.Primary
 
 @Composable
 fun ContentScreen(
-    content: ResultState<ContentUiState>
-) {
+    content: ResultState<ContentUiState>,
+    navController: NavController // NavController for navigation
 
+) {
+    // State to track if the bottom sheet is open
+    var showBottomSheet by remember { mutableStateOf(false) }
+
+    var showDeleteDialog by remember { mutableStateOf(false) }
+
+    // Show different UI based on content state
     when (content) {
         is ResultState.Error -> {}
-        ResultState.Loading -> Content(ContentUiState()) {}
+        ResultState.Loading -> Content(ContentUiState(), onMenuClicked = { showBottomSheet = true })
         is ResultState.Success -> {
             if (content.data != null) {
-                Content(content.data!!) {}
+                val title = content.data!!.title
+                val description = content.data!!.description
+                Content(content.data!!, onMenuClicked = { showBottomSheet = true })
+                BottomSheet(
+                    onEditClick = {
+                        navController.navigate(route = Screen.EditScreen.route + "?title=${title}&description=${description}")
+                    },
+                    onConnectClick = { /* Handle Connect action */ },
+                    onDeleteClick = {
+                        showDeleteDialog = true // Show delete dialog
+                        showBottomSheet = false
+                    },
+                    showBottomSheet = showBottomSheet,
+                    onDismissRequest = { showBottomSheet = false }
+                )
             }
         }
+    }
+    if (showDeleteDialog) {
+        AlertDialog(
+            onDelete = {
+                // Handle delete logic here (e.g., call a ViewModel function to delete the post)
+                showDeleteDialog = false // Close the dialog after deleting
+            },
+            onCancel = {
+                showDeleteDialog = false // Close the dialog when canceled
+            }
+        )
     }
 }
 
@@ -276,7 +309,7 @@ fun VideoPlayerWithThumbnail(videoUrl: String, thumbnailUrl: String) {
                 modifier = Modifier
                     .fillMaxSize()
                     .clickable { isPlaying = true },
-                contentScale =  ContentScale.Fit
+                contentScale = ContentScale.Fit
             )
 
             Image(
