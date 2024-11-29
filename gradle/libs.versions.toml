@@ -1,5 +1,6 @@
 [versions]
 compileSdk = "34"
+gson = "2.10.1"
 minSdk = "21"
 targetSdk = "34"
 agp = "8.5.2"
@@ -27,6 +28,7 @@ lifecycleViewmodelCompose = "2.8.7"
 [libraries]
 
 coroutine-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutine" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 # androidX dependeies

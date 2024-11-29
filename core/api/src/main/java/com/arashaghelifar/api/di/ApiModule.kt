@@ -51,7 +51,7 @@ internal object ApiModule {
 internal abstract class ApiSourceModule {
 
     @Binds
-    abstract fun bindLocalDatasource(defaultApiSource: DefaultApiSource): ApiSource
+    abstract fun bindApiSource(defaultApiSource: DefaultApiSource): ApiSource
 }
 
 
